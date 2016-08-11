@@ -1,0 +1,45 @@
+##### CLASE DEL 11 DE AGOSTO DE 2016
+
+sample (10000,35) 
+##### Es una función que permite hacer una muestras aleatorias
+##### en que de 10,000 números te arroja 35 que estén entre 0 y 10,000
+help(sample)
+
+
+##### VAMOS A CREAR UNA PEQUEÑA BASE DE DATOS
+##### 4 VARIABLES: nombre, edad, sexo, tipo de educación ######
+
+nombres <- c("sergio", "alan", "betzabeth", "judith", "rodrigo", 
+             "eric", "diego", "angel") 
+##### vector string o cadena de caracteres por eso se ponen las comillas
+edad <- c(36, 20, 23, 20, 21, 21, 22, 21)
+sexo <- c("hombre", "hombre", "mujer", "mujer", "hombre", "hombre", 
+          "hombre", "hombre") 
+##### Se recomienda que no tengan muchos caracteres las variables
+
+teduca <- c("pública", "pública", "pública", "pública", "privada", 
+            "pública", "pública", "pública")
+
+###### Vamos a generar una base en forma de matriz
+base1<-matrix (c(edad, nombres, sexo, teduca))
+#help(matrix)
+##### como la base no se genera como esperábamos vamos a utilizar una función que 
+##### se llama data.frame
+base1.1<-data.frame(nombres, edad, sexo, teduca)
+
+##### Ahora vamos a utilizar la función table
+##### La función table se utiliza para conocer la frecuencia de las diferentes 
+##### variables
+table(base1.1$edad)
+##### Se determina la base y qué variable se quiere encontrar la frecuencia
+##### El símbolo de pesos es el que indica la variable
+table(base1.1$sexo)
+##### Una función para que a partir de aquí sólo se trabaje la base que escoja
+##### De esta manera ya no es necesario espeficicar la base porque es la única que 
+##### permite
+attach(base1.1)
+table(edad)
+##### detach: Para determinar que ya no quiero utilizar esa base 
+detach (base1.1)
+##### summary: Esta función te hace un resúmen de estadística básica de tus variables
+summary (base1.1$edad)
