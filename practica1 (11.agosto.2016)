@@ -43,3 +43,16 @@ table(edad)
 detach (base1.1)
 ##### summary: Esta función te hace un resúmen de estadística básica de tus variables
 summary (base1.1$edad)
+
+
+##### Importar base de datos #####
+##### Para importar base de datos se utiliza el paquete foreign
+install.packages("foreign")
+require (foreign)
+##### Hacemos que lea el archivo con el tipo de archivo
+##### Buscamos el archivo, click derecho, propiedades, ubicación (copiamos la ubicación 
+##### y modificamos las diagonales de \ a /) también agregamos al final de la ubicación
+##### se agrega // y el nombre del aerchivo que aparece en propiedades 
+sociodem<-read.dbf ("C://Users//SALA-C11//Documents//Al//ENOE//SDEMT215.dbf")
+table (sociodem$SEX)
+
