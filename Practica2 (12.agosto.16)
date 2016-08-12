@@ -1,0 +1,67 @@
+##### Práctica 2
+##### Limpiar el entorno de trabajo *de preferencia nunca 
+##### usarla para no perder nuestro trabajo, dar click 
+##### "Control+L"
+rm(list=ls())
+
+##### DEFINIR DIRECTORIO RAÍZ #####
+setwd("C://Users//SALA-C8//Desktop//Al")
+
+##### ->este es el que hicimos ayer
+##### sociodem<-read.dbf("C://Users//SALA-C8//Desktop//inegi  ...
+##### ...   //SDEMT215.dbf") 
+##### sociodem<-data.frame(read.dbf("sociodem"))
+
+install.packages("foreign")
+require (foreign)
+SDEMT215<-data.frame(read.dbf("SDEMT215.dbf"))
+
+##### 1. Frecuencias
+##### Método 1
+View (SDEM215)
+install.packages("questionr")
+require(questionr)
+wtd.table(SDEMT215$POS_OCU)
+wtd.table(SDEMT215$POS_OCU,na.show = TRUE)
+
+##### Factor de expansión, hacen una muestra y a la persona que 
+##### cae, la variable FAC indica cuántas otras personas son como
+##### la persona que se expandió
+
+#1.2 Frecuencias con datos ponderados
+wtd.table(SDEMT215$POS_OCU,weights = SDEMT215$FAC,na.show = TRUE) 
+##### Si quitamos el na.show=TRUE por default dejan de aparecer los 
+##### datos perdidos
+
+#2.1 Tabulados CON DATOS MUESTRALES (sin ponderar)
+##### (PARA MOSTRAR FRECUENCIAS DE DOS VARIABLES TABULADOS)
+#Método 1
+wtd.table(SDEMT215$SEX,SDEMT215$POS_OCU)
+
+#2.2 Tabulados con datos ponderados 
+wtd.table(SDEMT215$SEX,SDEMT215$POS_OCU,weights = SDEMT215$FAC)
+
+
+### EJERCICIO
+# 1) OBTENER LA FRECUENCIA DE LA VARIABLE CLASE1 (MUESTRAL)
+# 2) OBTENER EL TABULADO DE ENTIDAD Y SEXO (MUESTRAL Y PONDERADO)
+
+wtd.table(SDEMT215$CLASE1)
+wtd.table(SDEMT215$ENT,SDEMT215$SEX) ## Muestral
+wtd.table(SDEMT215$ENT,SDEMT215$SEX,weights=SDEMT215$FAC)##Ponderado
+
+#3.1 Etiquetar en otra variable
+##### Genera una nueva variable, esta vez se llama SEXO, 
+SDEMT215$SEXO<-factor(SDEMT215$SEX,levels = c(1,2),labels = c("Hombre",
+                                                              "Mujer"))
+wtd.table(SDEMT215$SEX)
+wtd.table(SDEMT215$SEXO)
+View(SDEMT215)
+
+
+# 3.2 Etiquetar en la misma variable
+SDEMT215$POS_OCU<-factor(SDEMT215$POS_OCU,levels=c(1,2,3,4,5),labels= 
+                           c("Subordinados y remunerados", "Emleadores", 
+                             "Cuenta Propia", "Sin pago", "NE"))
+wtd.table(SDEMT215$POS_OCU)
+View(SDEMT215)
