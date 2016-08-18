@@ -1,0 +1,57 @@
+##### CLASE DEL 18 DE AGOSTO DE 2016
+##### PRÁCTICA 3
+##### Vamos a agrupar por edades en grupos quinquenales
+##### vamos a crear una nueva variable en que tendremos por edades deacuerdo al rango que se va a especificar
+
+# MÉTODO 4.1 DECODIFICAR
+SDEMT215$EDAD11[as.numeric(SDEMT215$EDA)>= 0 & as.numeric(SDEMT215$EDA)<=10]<-1 
+#FUNCIÓN PARA CONVERTIR UNA VARIABLE A NUMÉRICA ES as.numeric()
+SDEMT215$EDAD11[as.numeric(SDEMT215$EDA)>= 11 & as.numeric(SDEMT215$EDA)<=20]<-2
+SDEMT215$EDAD11[as.numeric(SDEMT215$EDA)>= 21 & as.numeric(SDEMT215$EDA)<=30]<-3
+SDEMT215$EDAD11[as.numeric(SDEMT215$EDA)>= 31 & as.numeric(SDEMT215$EDA)<=40]<-4
+SDEMT215$EDAD11[as.numeric(SDEMT215$EDA)>= 41 ]<-5
+ls(SDEMT215) ##GENERA UNA LISTA DE VARIABLES 
+table(SDEMT215$EDAD11)
+class (SDEMT215$ENT)
+##### es otro tipo de variable que es más cercano a la cadena
+##### para poder utilizar una variable que es cadena es necesario cambiarlo a caracter
+SDEMT215$ENT<-(as.character(as.numeric(SDEMT215$ENT)))
+
+# MÉTODO
+SDEMT215$EDAD111<- ifelse(as.numeric(SDEMT215$EDA)>= 0 & as.numeric(SDEMT215$EDA)<= 10,1,
+                          ifelse(as.numeric(SDEMT215$EDA)>= 11 & as.numeric(SDEMT215$EDA)<= 20,2,
+                                 ifelse(as.numeric(SDEMT215$EDA)>= 21 & as.numeric(SDEMT215$EDA)<= 30,3,
+                                        ifelse(as.numeric(SDEMT215$EDA)>= 31 & as.numeric(SDEMT215$EDA)<= 40,4,5
+                                        )
+                                 )
+                          )
+)
+#####IFELSE PARA HACER DEL TIPO CONDICIONAL, para que corra todo es necesario subrayar toda la instrucción
+table(SDEMT215$EDAD111)
+
+# 4.1 RECODIFICACIÓN DE VARIABLES TIPO CARACTER
+class(SDEMT215$R_DEF)
+
+SDEMT215$VALIDO[as.character(SDEMT215$R_DEF)!="00"]<-"Entrevista incompleta"
+SDEMT215$VALIDO[as.character(SDEMT215$R_DEF)=="00"]<-"Entrevista completa"
+wtd.table(SDEMT215$VALIDO)
+
+# 5.1 Seleccionando variables de interés 
+# Método 1
+var<-c("R_DEF","LOC", "MUN", "C_RES") 
+newdata1<- SDEMT215[,var]
+# SE CREA UN VECTOR EN ESTE CASO CON CUATRO ENTRADAS QUE COHINCIDEN CON LAS VARIABLES DE INTERÉS
+# EL PRIMER ESPACIO ESTÁ VACÍO POR QUE NO SE QUIERE CAMBIAR NADA DE ESA COLUMNA
+
+
+##### SELECCIONAR DATOS U OBSERVACIONES
+##### funcion...subset()
+help (subset)
+mujer<- subset(SDEMT215,SDEMT215$SEX == 2)
+table (mujer$SEX)
+mujer$CD_A<-as.character(mujer$CD_A)
+mujer1<- subset(mujer, mujer$CD_A == "02" | mujer$CD_A == "16") 
+table(mujer1$CD_A)
+
+#### SE HACE OTRO SUBSET DE LA BASE MUJER PARA PODER ENCONTRAR SÓLO LAS QUE SON DE GUADALAJARA Y TOLUCA
+table(SDEMT215$CD_A)
