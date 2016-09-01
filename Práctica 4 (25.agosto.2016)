@@ -1,0 +1,56 @@
+##### CLASE DEL 25 DE AGOSTO DE 2016
+##### PRÁCTICA 4
+
+install.packages("XLConnect")
+require(XLConnect)
+##### Pasa a exell las tablas que hicimos en el programa
+
+wb<-loadWorkbook("C://Users//Microsoft Windows 10//Documents//Facultad//7mo//Análisis de Regresión.xls",create=TRUE)
+##### wb SERÁ EL NOMBRE DEL ARCHIVO QUE SE VA A CREAR
+
+createSheet(wb,name="SEXO")
+##### CREA UNA HOJA EN EL ARCHIVO wb CON EL NOMBRE "SEXO"
+
+writeWorkSheet(wb,tabla1,"SEXO",startRow =1, startCol= 2, header = TRUE)
+##### TABLA QUE SE GENERA CON LA VARIABLE SEXO, EN QUÉ RENGLON INICIA Y EN QUÉ COLUMNA INICIA, 
+##### HEADER ES EL ENCABEZADO PARA SABER SI TIENE TÍTULO O NO EL CUADRO
+##### POR DEFAULT TE DA NEGATIVO POR ESO ES IMPORTANTE ESPECIFICARLO
+createWorkSheet(wb,name="COND. DE OCUP")
+writeWorkSheet(wb,tabla2, "COND. DE OCUP",startRow=1, startCol=2, header=TRUE)
+createSheet(wb,name="POBLACIÓN ACTIVA")
+
+ 
+##### VAMOS A RECONTRUIR UNAS VARIABLES DEL INEGI
+##### RECORDAR QUE "|" SIGNIFICA "Ó" , "&" SIGNIFICA "Y"
+##### CALCULAR DATO O RECONSTRUIR ALGUNAS VARIABLES DEL INEGI
+##### TAREA PARA CASA O EN EL FUTURO, EN EQUIPO
+
+
+
+##### BUSCAR DE LA VARIABLE "ENT" LA OPCIÓN DE CONSERVAR SÓLO LOS DATOS DE JALISCO Y COAHUILA
+#SDEMT215<-read.dbf("C://Users//Microsoft Windows 10//Documents//Facultad//7mo//Análisis de Regresión//Prácticas en R//SDEMT215")
+SDEMT215<-data.frame(read.dbf("SDEMT215.dbf"))
+ftres<- subset(SDEMT215,SDEMT215$ENT == "05" | SDEMT215$ENT == "14") 
+table (ftres$ENT)
+ftres$ENT<-as.character(ftres$ENT)
+ftres1<-subset(ftres,ftres$ENT== "05" | ftres$ENT== "14")
+table(ftres1$ENT)
+
+##### NOMBRANDO A LAS VARIABLES
+#ftres1$ENT<-factor(ftres1$ENT,levels=c(05,14),labels=c("Coahuila de Zaragoza","Jalisco"))
+#wtd.table(ftres1$ENT)
+#View(ftres1)
+
+##### TABLA 1
+##### POSICIÓN OCUPACIONAL Y SEXO
+#POS_OCU
+ftres2$POS_OCU<-as.character(ftres$POS_OCU)
+ftres3<- subset(ftres2, ftres3$POS_OCU == "05" | ftres$POS_OCU == "14") 
+table(ftres2$POS_OCU)
+
+
+##### TABLA 2
+##### POBLACIÓN ECONÓMICAMENTE ACTIVA Y SEXO
+
+##### TABLA 3
+##### CONDICIÓN DE ACTIVIDAD Y SEXO
