@@ -1,3 +1,34 @@
+Práctica 12, 7 de octubre de 2016 , continuación de la anterior 
+
+mod2<- lm(precio~calidad, data=moch)
+##### aplicar los supuestos para ver si tenemos un buen modelo
+
+moch$ajus <- fitted (mod2)
+moch$resi <- residuals(mod2)
+moch$rstud<- rstudent(mod2)
+
+##### Ahora probamos el supuesto de normalidad
+##### NORMALIDAD
+install.packages("lmtest")
+require (lmtest)
+ks.test(moch$rstud, "pnorm")
+
+##### histograma
+hist(moch$rstud, xlab = "residuales", main = "Hist residuales")
+
+##### El p-value para el contraste de normalidad es mayor que 0.05 (p= 0.9719) y
+##### además el histograma se parece a una distribución normal (curva en forma de
+##### campana) entonce sno hay problemas de normalidad.
+##### homogeneidad de varianzas
+bptest(mod2, studentize = FALSE, data = moch)
+##### Significación p=0.7166, mayor de 0.005 por lo que podemos decir que la
+##### varianza es constante a lo largo de la muestra.
+dwtest(modmo, alternative = "two.sided", data = mochil)
+##### Aceptamos la hipótesis nula de que no existe correlación entre los residuos
+##### con un p-valor superior a 0.05 p-value= 0.2976
+
+EJERCICIO
+
 rm(list=ls())
 ############### DATOS ###############
 y=  c(25.5, 31.2, 25.9, 38.4,  18.4, 26.7, 26.4, 25.9, 32,   25.2,  39.7,  35.7, 26.5 )
