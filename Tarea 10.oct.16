@@ -1,0 +1,68 @@
+##### TAREA DEL 10 DE OCTUBRE DE 2010
+
+##### Considere el Modelo Yt=Bo+B1X1+B2X2+Ut; con los sigientes datos ajusten el 
+##### modelo 
+##### Yt= {10,25,32,43,58,62,67,71} 
+##### x1= { 1, 3, 4, 5, 7, 8,10,10} y 
+##### X2= { 0,-1, 0, 1,-1, 0,-1, 2}
+##### Con estos datos estimar los valores de b0,b1 y b2.
+
+##### Para estimar estos parámetros hacerla a través de álgebra matricial con la
+##### siguiente fórmula  B^=[(X'X)^-1]YX' .
+##### Respuestas:
+##### b0=6.47, b1=6.58 y b2=.257
+
+rm(list=ls())
+
+##### Primero se estiman los parámetros bo, b1 y b2 
+
+# GENERANDO LA MATRIZ X
+
+##### Se crea la matriz que contiene los datos de x0, x1 y x2.
+##### Se especifica en nrow el número de renglones y en ncol el número de columnas
+##### de lo contrario, será una matriz de una sola columna.
+##### "dimnames" cambia los nombres que apareceran en las dimenciones, primero los
+##### renglores y después las columnas. 
+
+X<-matrix(c( 1, 1, 1, 1, 1, 1, 1, 1,
+             1, 3, 4, 5, 7, 8,10,10,
+             0,-1, 0, 1,-1, 0,-1, 2),
+          nrow=8,ncol=3,byrow=F, 
+          dimnames=list(c("1","2","3","4","5","6","7","8"),
+                        c("X0","X1","X2")))
+
+# GENERANDO X'
+tX<-t(X) 
+##### tX=matriz traspuesta de X
+
+#NOTA
+##### Para multiplicar matrices se utiliza %*%
+
+# GENERANDO X'X
+tXX<-tX%*%X
+
+# GENERANDO (X'X)^-1
+Xi<-solve(tXX)
+
+# GENERANDO YX'
+Yt<-c(10,25,32,43,58,62,67,71)
+Y<-tX%*%Yt
+
+# GENERANDO B^
+Xi%*%Y
+
+##### Se encuentra que los coeficientes son bo=6.4699828, b1=6.5883362 y 
+##### b2=0.2572899, por lo que la ecuación de Y queda de la siguiente manera
+
+#  Y=6.4699828 + 6.5883362 X1 + 0.2572899 X2
+
+##### Planteando la ecuación "y" considerando Yt, X1 Y X2 
+X1<-c(1,3,4,5,7,8,10,10)
+X2<-c(0,-1,0,1,-1,0,-1,2)
+y=lm(Yt~X1+X2)
+y
+
+##### Se encuentran los coeficientes Bo=6.4700, B1=6.5883 y B2=0.2573, por lo que
+##### la ecuación de Y queda:
+
+# Y= 6.4700 + 6.5883 X1 + 0.2573 X2
