@@ -1,0 +1,41 @@
+##### Tarea 1 de septiembre de 2016
+
+rm(list=ls())
+##### 1) gráfico de: v. dependiente y v. independiente
+##### EDAD 
+EDAD <- c(12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 
+          31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+          51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 
+          71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+          91, 92, 93, 94, 95, 96, 97, 98, 99, 100)
+          
+##### CANTIDAD TOTAL DE "HIJOS NACIDOS VIVOS"
+HNV<- c(1080336, 1044828, 1087377, 1123473, 1077824, 1133203, 1150835, 1020656, 1103374, 
+        948353, 1041599, 1008597, 977144, 983670, 915581, 906172, 936863, 839916, 1059255, 
+        726936, 943576, 873015, 841985, 929641, 894940, 820965, 915163, 767540, 960415, 
+        583241, 824726, 672572, 617950, 726848, 606129, 580955, 624917, 565517, 717349, 
+        421833, 551331, 483410, 487917, 497724, 435785, 358032, 387501, 346786, 461898, 
+        238556, 324954, 317862, 296529, 315550, 233826, 222583, 243509, 206524, 295781, 
+        139372, 206993, 183282, 174613, 180550, 140245, 114872, 134166, 95961, 146770, 
+        61486, 84034, 75129, 76240, 77504, 57332, 48267, 40130, 33470, 39794, 
+        13701, 18109, 13891, 11299, 11628, 9545, 6631, 7304, 4704, 11247)
+plot (EDAD, HNV, pch = 1, xlab = "Edad en años", ylab= "Hijos Nacidos Vivos", 
+      main = "Hijos Nacidos Vivos Por Mujer Según La Edad De La Mujer", col=1:10)
+
+##### 2) método de correlación
+cor(HNV, EDAD, method = "pearson")
+
+##### 3) se realiza una prueba a la correlación mediante una prueba de hipótesis
+cor.test(HNV, EDAD, method = "pearson")
+
+##### 4) aplicar el método de regresión
+MRegr <- lm(HNV~EDAD)
+summary(MRegr)
+
+##### 5) GENERAR LA RECTA
+plot (EDAD, HNV, pch = 1, xlab = "Edad en años", ylab= "Hijos Nacidos Vivos", 
+      main = "Hijos Nacidos Vivos Por Mujer Según La Edad De La Mujer", col=1:10)     
+abline(MRegr)
+MRegr$coefficients
+##### ENTONCES LA ECUACIÓN DE LA RECTA ES
+HNV= 1314739.06 - 14653.33 EDAD
