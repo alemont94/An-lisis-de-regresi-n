@@ -17,16 +17,19 @@ require(foreign)
 install.packages("questionr")
 require(questionr)
 
-ENESS<-read.dbf("C://Users//Microsoft Windows 10//Documents//Facultad//7mo//Análisis de Regresión//Prácticas en R//ENESS (trabajo equipo)//eness2013_cb_enoe_sdem.dbf")
+##### Base de datos
+ENESS<-data.frame(read.dbf("C://Users//Microsoft Windows 10//Documents//Facultad//
+                           7mo//Análisis de Regresión//Prácticas en R//ENESS 
+                           (trabajo equipo)//eness2013_cb_enoe_sdem.dbf"))
 
 ##### Población Objetivo
-# EDA7C -> Clasificación de la población de 14 años y más: Grupo edad 7 claves 
-# -> 6 -> 60 años y más
-edad<- subset(ENESS, ENESS$EDA7C == 6)
+# EDA7C: Clasificación de la población de 14 años y más: Grupo edad 7 claves 
+# -> 6 : 60 años y más
 
-# P9_1 -> ¿Actualmente (NOMBRE) cotiza en alguna de las siguientes instituciones?
-# -> 1 ->IMSS
-IMSS<-subset(edad, edad$P9_1 == 1)
+# P9_1 : ¿Actualmente (NOMBRE) cotiza en alguna de las siguientes instituciones?
+# -> 1 : IMSS
+
+p_obj<-subset(ENESS, ENESS$EDA7C == 6 & ENESS$P9_1 == 1 )
 
 
 ## Variable dicotómica: PENSIONADOS O NO PENSIONADOS
