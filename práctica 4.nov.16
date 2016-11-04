@@ -1,0 +1,18 @@
+##### Práctica del 4 de noviembre de 2016
+
+setwd("C:\\Users\\Microsoft Windows 10\\Documents\\Facultad\\7mo\\Análisis de Regresión\\Prácticas en R\\trabajo infantil 2007")
+require(foreign)
+mti2013<-data.frame(read.dbf("mti2013_05_17_sdem_precodificado.dbf"))
+
+wtd.table(mti2013$T_LOC, weights= mti2013$FAC_MTI)
+wtd.table(mti2013$T_LOC, mti2013$CLASE2, weights= mti2013$FAC_MTI)
+
+
+
+##### Población Objetivo: Ocupados y zonas rurales
+
+mti2013v1<-subset(mti2013, mti2013$CLASE2 == 1 & mti2013$T_LOC == 4)
+install.packages("questionr")
+require(questionr)
+
+wtd.table(mti2013v1$T_PER, weights= mti2013v1$FAC_MTI)
