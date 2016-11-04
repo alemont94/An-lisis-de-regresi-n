@@ -1,0 +1,43 @@
+# Alejandra 
+# Isadora
+# Stephanie
+# Betzabeth
+
+
+# Variable dicotómica-> pensión si/no
+# ENESS-> En cuesta Nacional de Empleo y Seguridad Social del 2012
+# Población Objetivo
+# •	(Pensionados) cotizado en el IMSS
+# •	que tenga 60 años o más 
+
+##### Paquetes utilizados (:
+install.packages("foreign")
+require(foreign)
+
+install.packages("questionr")
+require(questionr)
+
+ENESS<-read.dbf("C://Users//Microsoft Windows 10//Documents//Facultad//7mo//Análisis de Regresión//Prácticas en R//ENESS (trabajo equipo)//eness2013_cb_enoe_sdem.dbf")
+
+##### Población Objetivo
+# EDA7C -> Clasificación de la población de 14 años y más: Grupo edad 7 claves 
+# -> 6 -> 60 años y más
+edad<- subset(ENESS, ENESS$EDA7C == 6)
+
+# P9_1 -> ¿Actualmente (NOMBRE) cotiza en alguna de las siguientes instituciones?
+# -> 1 ->IMSS
+IMSS<-subset(edad, edad$P9_1 == 1)
+
+
+## Variable dicotómica: PENSIONADOS O NO PENSIONADOS
+
+# C_INAC5C -> Clasificación de la población no económicamente activa no disponible
+# por condición de inactividad -> 3 -> Pensionados y jubilados
+pensionados<- subset(IMSS, IMSS$C_INAC5C == 3)
+no_pensionados <- subset(IMSS, IMSS$C_INAC5C== 1 | 2 | 4 | 5)
+
+
+wtd.table(pensionados$SEX)
+wtd.table(no_pensionados$SEX)
+wtd.table(pensionados$SEX,pensionados$EDA)
+wtd.table(no_pensionados$SEX,no_pensionados$EDA)
