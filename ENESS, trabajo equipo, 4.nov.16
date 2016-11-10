@@ -30,17 +30,3 @@ ENESS<-data.frame(read.dbf("C://Users//Microsoft Windows 10//Documents//Facultad
 # -> 1 : IMSS
 
 p_obj<-subset(ENESS, ENESS$EDA7C == 6 & ENESS$P9_1 == 1 )
-
-
-## Variable dicotómica: PENSIONADOS O NO PENSIONADOS
-
-# C_INAC5C -> Clasificación de la población no económicamente activa no disponible
-# por condición de inactividad -> 3 -> Pensionados y jubilados
-pensionados<- subset(IMSS, IMSS$C_INAC5C == 3)
-no_pensionados <- subset(IMSS, IMSS$C_INAC5C== 1 | 2 | 4 | 5)
-
-
-wtd.table(pensionados$SEX)
-wtd.table(no_pensionados$SEX)
-wtd.table(pensionados$SEX,pensionados$EDA)
-wtd.table(no_pensionados$SEX,no_pensionados$EDA)
