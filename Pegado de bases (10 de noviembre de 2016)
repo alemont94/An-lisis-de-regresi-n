@@ -1,0 +1,75 @@
+##### Práctica del 10 de noviembre de 2016
+
+#####  PEGADO DE BASES #####
+# Variables que queremos pegar :3
+# SDEM    ej.->Sexo
+# COE 1   ej.->Trabajo
+# COE 2   ej.->
+
+# Se crea una variable llave que concatena la información de ambas variables.
+
+# Guarda las características de la variable que se quiere identificar en ambas
+# bases, de esta manera R reconoce esta variable y sus características.
+
+# Hallar las cariables identificadoras, crear esa variable y pegarla en la base
+# SDEM y en la COE 1, de tal manera que yo sepa los datos específicos de x persona
+# y de esta manera se genera una base muy grande.
+
+##### Paquetes utilizados (:
+setwd("C:\\Users\\Microsoft Windows 10\\Documents\\Facultad\\7mo\\Análisis de Regresión\\Prácticas en R\\ENOE")
+install.packages("foreign")
+require(foreign)
+
+##### Bases de datos
+SDEM<-data.frame(read.dbf("sdemt216.dbf"))
+
+COE1<-data.frame(read.dbf("coe1t216.dbf"))
+
+COE2<-data.frame(read.dbf("coe2t216.dbf"))
+
+
+# Para concatenar una base es crear una variable
+folio<-paste(SDEM$CD_A, SDEM$ENT, SDEM$CON, SDEM$V_SEL, SDEM$N_HOG, SDEM$H_MUD,
+             SDEM$N_REN)
+# Esta variable crea un"folio" que está compuesto por los datos de dichas variables
+
+# Se crea un data.frame que utiliza la variable x
+x<-data.frame(SDEM, folio)
+x$folio
+
+#Se crea otra variable folio, pero esta vez va a ser de COE1
+folio<-paste(COE1$CD_A, COE1$ENT, COE1$CON, COE1$V_SEL, COE1$N_HOG, COE1$H_MUD,
+             COE1$N_REN)
+
+x1<-data.frame(COE1, folio)
+
+
+folio<-paste(COE2$CD_A, COE2$ENT, COE2$CON, COE2$V_SEL, COE2$N_HOG, COE2$H_MUD,
+             COE2$N_REN)
+
+x2<-data.frame(COE2, folio)
+
+total<-merge(x,x1,by="folio", all.x = TRUE)
+
+# Se pega mediante la variable "folio"
+
+EnoeTotal<-merge(total,x2,by="folio", all.x = TRUE)
+
+View(EnoeTotal)
+ls(x1)
+# Para saber si está bien pegada la base es necesario hacer un tabulado de la 
+# siguiente manera.
+
+require (questionr)
+
+wtd.table(EnoeTotal$SEX, EnoeTotal$P1, weights = EnoeTotal$FAC)
+
+# Se agarra una variable que sólo esté en SDEM y otra que sólo esté en COE1, si 
+# se obtiene un resultado coherente, quiere decir que está bien pegada la base.
+
+wtd.table(EnoeTotal$SEX, EnoeTotal$P1)
+
+##### TAREA #####
+# Utilizar la función merge, encontrar la manera de que cuando se repita una 
+# variable en las diferentes bases se mantenga el nombre original de la variable
+# y no específicamente de dónde se tomó el dato (VAR.X; VAR2.Y, etc).
