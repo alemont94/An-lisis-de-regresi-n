@@ -11,6 +11,7 @@
 # •	que tenga 60 años o más 
 
 ##### Paquetes utilizados (:
+setwd("C://Users//Microsoft Windows 10//Documents//Facultad//7mo//Análisis de Regresión//Prácticas en R//ENESS (trabajo equipo)")
 install.packages("foreign")
 require(foreign)
 
@@ -18,15 +19,49 @@ install.packages("questionr")
 require(questionr)
 
 ##### Base de datos
-ENESS<-data.frame(read.dbf("C://Users//Microsoft Windows 10//Documents//Facultad//
-                           7mo//Análisis de Regresión//Prácticas en R//ENESS 
-                           (trabajo equipo)//eness2013_cb_enoe_sdem.dbf"))
+enoe_sdem<-data.frame(read.dbf("eness2013_cb_enoe_sdem.dbf"))
+hogares<-data.frame(read.dbf("eness2013_hogares.dbf"))
 
 ##### Población Objetivo
 # EDA7C: Clasificación de la población de 14 años y más: Grupo edad 7 claves 
 # -> 6 : 60 años y más
 
-# P9_1 : ¿Actualmente (NOMBRE) cotiza en alguna de las siguientes instituciones?
+# P13_1 : ¿(NOMBRE)recibe pensión …
 # -> 1 : IMSS
 
-p_obj<-subset(ENESS, ENESS$EDA7C == 6 & ENESS$P9_1 == 1 )
+# FOLIO 1
+folio<-paste(hogares$CD_A, hogares$ENT, hogares$CON, hogares$V_SEL, 
+             hogares$N_HOG, hogares$H_MUD)
+x1<-data.frame(hogares, folio)
+
+# FOLIO 2
+folio<-paste(enoe_sdem$CD_A, enoe_sdem$ENT, enoe_sdem$CON, enoe_sdem$V_SEL, 
+             enoe_sdem$N_HOG, enoe_sdem$H_MUD)
+#folio<-paste(enoe_sdem$CD_A, enoe_sdem$ENT, enoe_sdem$CON, enoe_sdem$V_SEL, 
+#             enoe_sdem$N_HOG, enoe_sdem$H_MUD,enoe_sdem$N_REN)
+
+x2<-data.frame(enoe_sdem, folio)
+
+total<-merge(x1,x2,by="folio", all.x = TRUE)
+
+wtd.table(total$SEX, total$H_MUD.x, weights = total$FAC)
+
+# grupo de edad ->grupos de 10 años ()
+#if (EDA7C== 60 | 69)
+
+## FILTRANDO POBLACIÓN OBJETIVO
+p_obj<-subset(total, total$EDA19C == c(15,16,17,18) & total$P13_1 == 1 )
+
+table(p_obj$EDA19C)
+
+# RECODIFICACIÓN
+
+library(car)
+p_obj$EDA10<-recode(p_obj$EDA19C, "c(15,16)='60_69'; c(17,18)='70_mas'")
+
+table(p_obj$EDA10)
+
+
+
+## RECODIFICAR POSICIÓN OCUPACIONAL
+p_obj2<-subset(p_obj, p_obj$POS_OCU  )
